@@ -102,4 +102,63 @@ public class SavingAccountTest {
         int actual = saving.yearChange();
         Assertions.assertEquals(expected, actual);
     }
+    @Test
+    public void shouldChangeAtZeroBalance() {
+        SavingAccount saving = new SavingAccount(
+                0,
+                1_000,
+                10_000,
+                5
+        );
+
+        int expected = 0;
+        int actual = saving.yearChange();
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldCheckExceptionNegativeRate() { // Проверка выдачи исключения при отрицательной процентной ставке.
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    1_000,
+                    3_000,
+                    10_000,
+                    -1
+            );
+        });
+    }
+    @Test
+    public void shouldCheckExceptionZeroMaxBalance() { // Проверка выдачи исключения при нулевом максимальном балансе.
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    1_000,
+                    3_000,
+                    0,
+                    5
+            );
+        });
+    }
+    @Test
+    public void shouldCheckExceptionNegativeInitialBalance() { // Проверка выдачи исключения при отрицательном начальном балансе.
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    - 1_000,
+                    3_000,
+                    10_000,
+                    5
+            );
+        });
+    }
+    @Test
+    public void shouldCheckExceptionMinBalanceMoreMaxBalance() { // Проверка выдачи исключения если мин. баланс выше макс. баланса.
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                     1_000,
+                    3_000,
+                    1_000,
+                    5
+            );
+        });
+    }
+
 }
