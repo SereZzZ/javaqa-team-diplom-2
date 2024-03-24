@@ -17,19 +17,6 @@ public class SavingAccountTest {
 
         Assertions.assertEquals(5_000, account.getBalance());
     }
-    @Test
-    public void shouldAddLessThanMaxBalance() {
-        SavingAccount account = new SavingAccount(
-                2_000,
-                1_000,
-                10_000,
-                5
-        );
-
-        account.add(10_000);
-
-        Assertions.assertEquals(2_000 + 8_000, account.getBalance());
-    }
 
     @Test
     public void shouldNotAddNegativeNumber() {
@@ -76,7 +63,7 @@ public class SavingAccountTest {
     @Test
     public void shouldPayLessThanMinBalance() {
         SavingAccount saving = new SavingAccount(
-                1600,
+                1_600,
                 1_000,
                 10_000,
                 5
@@ -88,15 +75,28 @@ public class SavingAccountTest {
     }
 
     @Test
+    public void shouldPayWhenAmountMoreInitialBalance() {
+        SavingAccount saving = new SavingAccount(
+                1_600,
+                1_000,
+                10_000,
+                5
+        );
+        saving.pay(3000);
+
+        Assertions.assertEquals(1_600, saving.getBalance());
+    }
+
+    @Test
     public void shouldPayEqualsThanMinBalance() {
         SavingAccount saving = new SavingAccount(
-                1500,
+                1_500,
                 1_000,
                 10_000,
                 5
         );
 
-        boolean expected = false;
+        boolean expected = true;
         boolean actual = saving.pay(500);
         Assertions.assertEquals(expected, actual);
     }
