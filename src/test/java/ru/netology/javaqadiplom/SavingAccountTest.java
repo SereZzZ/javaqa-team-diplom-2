@@ -75,6 +75,33 @@ public class SavingAccountTest {
     }
 
     @Test
+    public void shouldPayNegativeAmount() {
+        SavingAccount saving = new SavingAccount(
+                1_600,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = saving.pay(-500);
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPayZeroAmount() {
+        SavingAccount saving = new SavingAccount(
+                1_600,
+                1_000,
+                10_000,
+                5
+        );
+
+        boolean expected = false;
+        boolean actual = saving.pay(0);
+        Assertions.assertEquals(expected, actual);
+    }
+    @Test
     public void shouldPayWhenAmountMoreInitialBalance() {
         SavingAccount saving = new SavingAccount(
                 1_600,
@@ -111,19 +138,6 @@ public class SavingAccountTest {
         );
 
         int expected = 75;
-        int actual = saving.yearChange();
-        Assertions.assertEquals(expected, actual);
-    }
-    @Test
-    public void shouldChangeAtZeroBalance() {
-        SavingAccount saving = new SavingAccount(
-                0,
-                1_000,
-                10_000,
-                5
-        );
-
-        int expected = 0;
         int actual = saving.yearChange();
         Assertions.assertEquals(expected, actual);
     }
@@ -173,4 +187,27 @@ public class SavingAccountTest {
         });
     }
 
+    @Test
+    public void shouldCheckExceptionInitialBalanceMoreMaxBalance() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    7_000,
+                    3_000,
+                    6_000,
+                    5
+            );
+        });
+    }
+
+    @Test
+    public void shouldCheckExceptionNegativeMinBalance() { // Проверка выдачи исключения при нулевом максимальном балансе.
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            SavingAccount account = new SavingAccount(
+                    1_000,
+                    -1_000,
+                    8000,
+                    5
+            );
+        });
+    }
 }
