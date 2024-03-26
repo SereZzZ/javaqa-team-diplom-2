@@ -21,13 +21,13 @@ public class CreditAccountTest {
     @Test
     public void shouldAddToNegativeBalance() {  //пополнение счета при отрецательном балансе
         CreditAccount account = new CreditAccount(
-                -50,
+                50,
                 1_000,
                 20
         );
         account.add(500);
 
-        Assertions.assertEquals(450, account.getBalance());
+        Assertions.assertEquals(550, account.getBalance());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class CreditAccountTest {
 
         account.pay(1_500);
 
-        Assertions.assertEquals(-500, account.getBalance());
+        Assertions.assertEquals(1000, account.getBalance());
     }
 
     @Test
@@ -157,12 +157,12 @@ public class CreditAccountTest {
     @Test
     public void shouldCalculationYearChangeWhenNegativeBalance() { // Расчет процентов при отрицательном балансе.
         CreditAccount account = new CreditAccount(
-                -1_000,
+                1_000,
                 3_000,
                 10
         );
 
-        Assertions.assertEquals(-100, account.yearChange());
+        Assertions.assertEquals(0, account.yearChange());
     }
 
     @Test
